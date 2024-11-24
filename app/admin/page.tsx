@@ -131,9 +131,12 @@ const AdminDashboard = () => {
 
       {/* Logout Button */}
       <div className="mb-4 flex justify-center">
-        <SignOutButton className="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700">
-          Sign Out
-        </SignOutButton>
+         <div className="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700">
+          {/* SignOutButton wrapped in div for styling */}
+          <SignOutButton>
+            Sign Out
+          </SignOutButton>
+        </div>
       </div>
 
 
