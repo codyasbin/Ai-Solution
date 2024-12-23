@@ -18,7 +18,9 @@ const Stats = ({ stats }: StatsProps) => {
         {/* Total Contacts */}
         <div className="bg-purple-700 text-white p-6 rounded-lg shadow-lg">
           <h3 className="text-2xl font-bold">Total Contacts</h3>
-          <p className="text-xl mt-4">{stats ? stats.totalContacts : 0}</p>
+          <div className="flex justify-center items-center h-full ">
+          <p className="text-9xl">{stats ? stats.totalContacts : 0}</p>
+          </div>
         </div>
 
         {/* Country Stats Pie Chart */}

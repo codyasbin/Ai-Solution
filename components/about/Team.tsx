@@ -27,8 +27,8 @@ export default function TeamSection() {
               transition={{ duration: 1, delay: 0.2 }}
             >
               <img
-                src="https://scontent.fktm18-1.fna.fbcdn.net/v/t39.30808-1/424967863_744172227847861_7687172273595905227_n.jpg?stp=cp6_dst-jpg_s200x200&_nc_cat=101&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=VvXUQ-J3Lt4Q7kNvgGVoPlt&_nc_zt=24&_nc_ht=scontent.fktm18-1.fna&_nc_gid=AtNAjqlne2OE0u8xStGqWl4&oh=00_AYB0TXBNGxhhmqQjkcH94qqrNar72wHfiAM68LRJjTdJtw&oe=6746081A"
-                alt="Jane Doe"
+                src="/jharna.png"
+                alt="Jharna Kunwar "
                 className="w-40 h-40 rounded-full border-4 border-purple-600 mb-4 mx-auto"
               />
               <h3 className="text-xl font-semibold text-purple-700">Jharna Kunwar</h3>
