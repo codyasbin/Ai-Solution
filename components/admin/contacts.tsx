@@ -67,36 +67,36 @@ const ContactInfo = () => {
 
   return (
     <motion.div
-      className="overflow-x-auto shadow-lg rounded-lg bg-white"
+      className="overflow-x-auto shadow-lg rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      <table className="min-w-full text-sm text-left text-gray-500">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-100">
+      <table className="min-w-full text-sm text-left text-gray-600">
+        <thead className="text-xs text-gray-800 uppercase bg-indigo-100 rounded-md shadow-md">
           <tr>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Name
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Email
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Phone
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Company
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Country
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Job Title
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Job Details
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 text-center">
               Actions
             </th>
           </tr>
@@ -105,7 +105,7 @@ const ContactInfo = () => {
           {contacts.map((contact) => (
             <motion.tr
               key={contact._id}
-              className="border-b bg-white hover:bg-gray-50 transition duration-300"
+              className="border-b bg-white hover:bg-indigo-50 transition duration-300"
               whileHover={{ scale: 1.02 }}
             >
               <td className="px-6 py-4">{contact.name}</td>
@@ -115,32 +115,21 @@ const ContactInfo = () => {
               <td className="px-6 py-4">{contact.country}</td>
               <td className="px-6 py-4">{contact.jobTitle}</td>
               <td className="px-6 py-4">{contact.jobDetails}</td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 text-center">
                 <button
-                  className="text-red-600 hover:text-red-900"
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
                   onClick={() => handleDelete(contact._id)}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  Delete
                 </button>
               </td>
             </motion.tr>
           ))}
         </tbody>
       </table>
-      {loading && <div className="text-center py-4">Loading contacts...</div>}
+      {loading && (
+        <div className="text-center py-4 text-gray-600">Loading contacts...</div>
+      )}
     </motion.div>
   );
 };

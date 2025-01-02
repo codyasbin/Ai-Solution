@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FaUserAlt, FaStar, FaCamera } from "react-icons/fa";
 
 interface FeedbackData {
   name: string;
@@ -46,7 +47,7 @@ export default function FeedbackForm() {
 
       const result = await response.json();
       if (response.ok) {
-        setSuccessMessage("Feedback submitted successfully!");
+        setSuccessMessage("Feedback submitted successfully! 🎉");
         setFormData({
           name: "",
           role: "",
@@ -55,11 +56,11 @@ export default function FeedbackForm() {
           rating: 5,
         });
       } else {
-        setErrorMessage(result.error || "Failed to submit feedback");
+        setErrorMessage(result.error || "Submission failed. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      setErrorMessage("An error occurred. Please try again.");
+      setErrorMessage("Oops! Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -67,96 +68,103 @@ export default function FeedbackForm() {
 
   return (
     <form
-      className="bg-white p-8 rounded-xl shadow-lg max-w-lg mx-auto mt-8 space-y-6"
+      className="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 p-10 rounded-2xl shadow-2xl transform transition-all hover:scale-105 ease-in-out max-w-2xl mx-auto mt-12 space-y-8 mb-10"
       onSubmit={handleSubmit}
     >
-      <h3 className="text-3xl font-semibold text-center text-gray-800">
-        Share Your Thoughts with Us
+      <h3 className="text-4xl font-extrabold text-center text-white">
+        Your Feedback Means the World 🌟
       </h3>
+      <p className="text-center text-gray-200">
+        Help us improve by sharing your thoughts and experiences!
+      </p>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* Name Input */}
-        <div>
+        <div className="relative">
           <input
             type="text"
             name="name"
             placeholder="Your Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-4 border-2 border-gray-300 rounded-md shadow-md focus:ring-2 focus:ring-purple-500"
+            className="w-full p-4 pl-12 border-2 border-transparent rounded-xl shadow-lg focus:ring-2 focus:ring-pink-500 focus:outline-none text-gray-800"
             required
           />
+          <FaUserAlt className="absolute left-4 top-1/2 transform -translate-y-1/2 text-pink-500" />
         </div>
 
         {/* Role Input */}
-        <div>
+        <div className="relative">
           <input
             type="text"
             name="role"
-            placeholder="Your Role"
+            placeholder="Your Role (e.g., Developer)"
             value={formData.role}
             onChange={handleChange}
-            className="w-full p-4 border-2 border-gray-300 rounded-md shadow-md focus:ring-2 focus:ring-purple-500"
+            className="w-full p-4 pl-12 border-2 border-transparent rounded-xl shadow-lg focus:ring-2 focus:ring-pink-500 focus:outline-none text-gray-800"
             required
           />
+          <FaUserAlt className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-500" />
         </div>
 
         {/* Image URL Input */}
-        <div>
+        <div className="relative">
           <input
             type="text"
             name="image"
-            placeholder="Add profile image url"
+            placeholder="Profile Image URL (Optional)"
             value={formData.image}
             onChange={handleChange}
-            className="w-full p-4 border-2 border-gray-300 rounded-md shadow-md focus:ring-2 focus:ring-purple-500"
+            className="w-full p-4 pl-12 border-2 border-transparent rounded-xl shadow-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-800"
           />
+          <FaCamera className="absolute left-4 top-1/2 transform -translate-y-1/2 text-indigo-500" />
         </div>
 
         {/* Feedback Textarea */}
         <div>
           <textarea
             name="feedback"
-            placeholder="Share your feedback..."
+            placeholder="Share your experience..."
             value={formData.feedback}
             onChange={handleChange}
-            rows={4}
-            className="w-full p-4 border-2 border-gray-300 rounded-md shadow-md focus:ring-2 focus:ring-purple-500"
+            rows={5}
+            className="w-full p-4 border-2 border-transparent rounded-xl shadow-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-800"
             required
           ></textarea>
         </div>
 
-        {/* Rating */}
+        {/* Rating Input */}
         <div>
-          <label htmlFor="rating" className="text-gray-600 font-semibold">
-            Rating (1-5)
+          <label htmlFor="rating" className="text-white font-semibold">
+            Rate Us
           </label>
-          <input
-            type="number"
-            name="rating"
-            min={1}
-            max={5}
-            value={formData.rating}
-            onChange={handleChange}
-            className="w-full p-4 border-2 border-gray-300 rounded-md shadow-md focus:ring-2 focus:ring-purple-500"
-            required
-          />
+          <div className="flex items-center mt-2">
+            {[...Array(5)].map((_, index) => (
+              <FaStar
+                key={index}
+                className={`cursor-pointer text-2xl ${
+                  formData.rating > index ? "text-yellow-400" : "text-gray-300"
+                }`}
+                onClick={() => setFormData({ ...formData, rating: index + 1 })}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Display success or error messages */}
+        {/* Success or Error Messages */}
         {successMessage && (
-          <p className="text-green-500 text-center">{successMessage}</p>
+          <p className="text-green-500 bg-white text-center text-lg">{successMessage}</p>
         )}
-        {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+        {errorMessage && <p className="text-red-500 text-center text-lg">{errorMessage}</p>}
 
         {/* Submit Button */}
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300"
+            className="bg-pink-600 text-white font-semibold py-3 px-6 rounded-full shadow-xl hover:bg-pink-700 transition duration-300 transform hover:scale-105"
             disabled={isLoading}
           >
-            {isLoading ? "Submitting..." : "Submit Your Feedback"}
+            {isLoading ? "Submitting..." : "Submit Feedback"}
           </button>
         </div>
       </div>

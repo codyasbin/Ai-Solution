@@ -1,35 +1,36 @@
 "use client";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { FaCalendarAlt, FaRegClock, FaLocationArrow } from "react-icons/fa"; // Importing icons
+import Link from "next/link"; // Import Link
 
 const events = [
   {
-    title: "AI Conference 2024",
+    title: "AI Summit 2024",
     date: "Jan 15, 2024",
     location: "San Francisco, CA",
-    description: "Explore the latest advancements in AI and network with industry leaders.",
-    image: "https://blog.huddles.app/wp-content/uploads/aiimageheader.png", // Replace with actual image URL
+    description: "Join us to delve into the future of AI with top experts.",
+    icon: <FaCalendarAlt size={50} className="text-teal-500" />, // Calendar icon
   },
   {
-    title: "Webinar: AI in Healthcare",
+    title: "AI in Healthcare Webinar",
     date: "Feb 20, 2024",
     location: "Online Event",
-    description: "Discover how AI is revolutionizing the healthcare industry.",
-    image: "https://75d03c5f1bfbbbb9cc13-369a671ebb934b49b239e372822005c5.ssl.cf1.rackcdn.com/live-webinar-promise-and-peril-ai-in-healthcare-showcase_image-8-w-5108.jpg", // Replace with actual image URL
+    description: "Learn how AI is transforming healthcare from industry leaders.",
+    icon: <FaRegClock size={50} className="text-yellow-500" />, // Clock icon
   },
   {
-    title: "Tech Expo 2024",
+    title: "Innovative Tech Expo 2024",
     date: "March 5, 2024",
     location: "New York, NY",
-    description: "Experience groundbreaking tech innovations at this year’s expo.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQlQrsT_qTR7YWYqwGStGGOhsryeB93vREfA&s", // Replace with actual image URL
+    description: "Discover the latest tech innovations at this year's expo.",
+    icon: <FaLocationArrow size={50} className="text-blue-500" />, // Location icon
   },
 ];
 
 export default function EventsSection() {
   return (
     <motion.section
-      className="py-16 bg-purple-50 text-white"
+      className="py-20 bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 text-white"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -39,34 +40,33 @@ export default function EventsSection() {
       }}
     >
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl text-purple-950 font-bold text-center mb-8">Upcoming Events</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <h2 className="text-5xl font-extrabold text-center text-white mb-16">Upcoming Events</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
           {events.map((event, index) => (
             <motion.div
               key={index}
-              className="relative overflow-hidden rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
+              className="relative overflow-hidden rounded-lg shadow-xl bg-white text-gray-800 transform hover:scale-105 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
             >
-              {/* Event Image */}
-              <img
-                src={event.image}
-                alt={event.title}
-                className="w-full h-64 object-cover"
-              />
+              {/* Icon Container */}
+              <div className="flex justify-center items-center bg-gradient-to-t from-teal-400 to-teal-500 text-white rounded-full w-24 h-24 mx-auto mt-8">
+                {event.icon}
+              </div>
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-6 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                <h3 className="text-2xl font-semibold">{event.title}</h3>
-                <p className="text-sm text-gray-300 mt-2">
-                  {event.date} - {event.location}
-                </p>
-                <p className="mt-4 text-gray-400">{event.description}</p>
-                <Link href={"contact"}>
-                
-                <button className="mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold rounded-md">
-                  Register
-                </button>
-                </Link>
+              {/* Event Details */}
+              <div className="p-6 text-center">
+                <h3 className="text-2xl font-semibold text-teal-700">{event.title}</h3>
+                <p className="text-sm text-gray-500 mt-2">{event.date} - {event.location}</p>
+                <p className="mt-4 text-gray-600">{event.description}</p>
+
+                {/* Register Button with Link */}
+                <motion.div whileHover={{ scale: 1.1 }}>
+                  <Link href="/contact">
+                    <button className="mt-6 px-6 py-2 bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold rounded-md shadow-md transition-all duration-300">
+                      Sign Up
+                    </button>
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           ))}

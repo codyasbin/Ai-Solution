@@ -13,9 +13,11 @@ interface Feedback {
 
 export default function FeedbackSection() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Fetch feedback from the API
   const fetchFeedback = async () => {
+    setLoading(true);
     try {
       const response = await fetch("/api/testimonials");
       const data = await response.json();
@@ -26,6 +28,8 @@ export default function FeedbackSection() {
       }
     } catch (error) {
       console.error("Error fetching feedback:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,6 +59,23 @@ export default function FeedbackSection() {
     fetchFeedback();
   }, []);
 
+  // Helper to render stars based on rating
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 !== 0;
+    return (
+      <>
+        {[...Array(fullStars)].map((_, i) => (
+          <span key={i} className="text-yellow-500">★</span>
+        ))}
+        {halfStar && <span className="text-yellow-300">★</span>}
+        {[...Array(5 - Math.ceil(rating))].map((_, i) => (
+          <span key={i + fullStars + (halfStar ? 1 : 0)} className="text-gray-300">★</span>
+        ))}
+      </>
+    );
+  };
+
   return (
     <motion.div
       className="p-8 space-y-6"
@@ -63,41 +84,52 @@ export default function FeedbackSection() {
       transition={{ duration: 0.8 }}
     >
       <h2 className="text-3xl font-bold text-center mb-8">Feedbacks</h2>
-      
-      {/* Loop through the feedbacks */}
-      {feedbacks.length > 0 ? (
-        feedbacks.map((feedback) => (
-          <motion.div
-            key={feedback._id}
-            className="bg-white p-6 rounded-lg shadow-md mb-4"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-xl font-semibold">{feedback.name}</h3>
-                <p className="text-gray-500">{feedback.role}</p>
-              </div>
-              <button
-                onClick={() => handleDeleteFeedback(feedback._id)}
-                className="text-red-600 hover:text-red-900"
-              >
-                Delete
-              </button>
-            </div>
-            <p className="mt-4 italic">{feedback.feedback}</p>
-            <div className="flex mt-4">
-              {[...Array(Math.floor(feedback.rating))].map((_, i) => (
-                <span key={i} className="text-yellow-500">★</span>
-              ))}
-              {feedback.rating % 1 !== 0 && (
-                <span className="text-yellow-300">★</span>
-              )}
-            </div>
-          </motion.div>
-        ))
+
+      {loading ? (
+        <div className="text-center text-xl">Loading feedback...</div>
       ) : (
-        <p>No feedback available</p>
+        <div className="overflow-x-auto">
+          {/* Feedback Table */}
+          <table className="min-w-full text-sm text-left text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-100">
+              <tr>
+                <th scope="col" className="px-6 py-3">Name</th>
+                <th scope="col" className="px-6 py-3">Role</th>
+                <th scope="col" className="px-6 py-3">Feedback</th>
+                <th scope="col" className="px-6 py-3">Rating</th>
+                <th scope="col" className="px-6 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {feedbacks.length > 0 ? (
+                feedbacks.map((feedback) => (
+                  <motion.tr
+                    key={feedback._id}
+                    className="border-b bg-white hover:bg-gray-50 transition duration-300"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <td className="px-6 py-4">{feedback.name}</td>
+                    <td className="px-6 py-4">{feedback.role}</td>
+                    <td className="px-6 py-4">{feedback.feedback}</td>
+                    <td className="px-6 py-4">{renderStars(feedback.rating)}</td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => handleDeleteFeedback(feedback._id)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </motion.tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="text-center px-6 py-4">No feedback available</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
     </motion.div>
   );
